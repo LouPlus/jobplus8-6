@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+
+
+
+{% block body %}
+	<div class="container">
+		<div class="jumbotron">
+		
+			<h1>JOBPLUS</h1>
+			<p>领先的互联网求职、招聘平台</p>
+		</div>
+	</div>
+
+
+
+<div class="container">
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#">最新职位</a></li>
+</ul>
+
+<div class="job-list">
+{% for i in range(9) %}
+	<div class="col-sm-6 col-md-4">
+		<div class="job-box">
+			<div class="caption">
+				<a href="">
+					<b>{{ job[i].jobname }}</b>
+					<span class="timesince">{{ job[i].created_at }}</span>
+					<p>经验{{job[i].exprience }}年</p>
+					<span class="label label-default">{{job[i].job_description}}</span>
+				</a>
+
+			</div>
+		   
+		</div>
+	</div>
+{% endfor %}
+</div>
+<p class="read_more">
+<a href="#" class="btn btn-primary btn-lg active" role="button">查看更多</a>
+</p>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#">最新公司</a></li>
+</ul>
+<div class="company-list">
+{% for i in range(12) %}
+	<div class="col-sm-6 col-md-3">
+		<div class="com-box">
+			<div class="caption">
+				<a href="">
+					<b>{{ company[i].company_name }}</b>
+					
+
+				</a>
+
+			</div>
+		   
+		</div>
+	</div>
+{% endfor %}
+</div>
+<p class="read_more">
+<a href="#" class="btn btn-primary btn-lg active" role="button">查看更多</a>
+</p>
+
+
+</div>
+{% endblock %}
+
+
