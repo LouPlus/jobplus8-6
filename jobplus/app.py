@@ -23,7 +23,7 @@ def register_blueprint(app):
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(configs.get(config))
-    retister_extensions(app)
+    register_extensions(app)
     register_blueprint(app)
     return app
 

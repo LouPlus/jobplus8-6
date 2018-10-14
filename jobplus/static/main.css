@@ -1,0 +1,23 @@
+
+.footer{
+text-align: center;
+}
+
+
+.job-list,
+.company-list {
+  margin-top: 15px;
+}
+
+.job-box,
+.com-box  {
+    padding: 13px;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.read_more {
+	text-align: center;
+
+}
