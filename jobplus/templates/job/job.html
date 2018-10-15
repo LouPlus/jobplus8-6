@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% from "macros.html" import render_pagination %}
+
+{% block body %}
+<div class="container">
+	<div class="jumbotron">
+	
+		<h1>Just a test</h1>
+		<p>Wahahaha</p>
+	</div>
+</div>
+
+<div class="job-list">
+{% for job in pagination.items %}
+	<div class="col-sm-6 col-md-4">
+		<div class="job-box">
+			<div class="caption">
+				<a href="">
+					<b>{{ job.jobname }}</b>
+					<span class="timesince">{{ job.created_at }}</span>
+					<p>经验{{job.exprience }}年</p>
+					<span class="label label-default">{{job.job_description}}</span>
+				</a>
+
+			</div>
+		   
+		</div>
+	</div>
+{% endfor %}
+</div>
+{{ render_pagination(pagination,'front.job')}}
+{% endblock %}

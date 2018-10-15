@@ -1,5 +1,5 @@
 from jobplus.models import Job,Company
-from flask import render_template,Blueprint,flash
+from flask import render_template,Blueprint,flash,request,current_app
 from flask_login import login_user,logout_user,login_required
 
 front = Blueprint('front',__name__)
@@ -36,3 +36,15 @@ def logout():
     logout_user()
     flash('logout','success')
     return redirect(url_for('front.index'))
+
+@front.route('/job')
+def job():
+    job=Job.query.all()
+    page = request.args.get('page',default=1,type=int)
+    pagination = Job.query.paginate(
+        page = page,
+        per_page = current_app.config['INDEX_PER_PAGE'],
+        error_out = False
+    )
+    return render_template('./job/job.html',pagination=pagination,job=job)
+
