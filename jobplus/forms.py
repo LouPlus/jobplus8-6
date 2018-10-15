@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,BooleanField
 from wtforms.validators import Length,Email,EqualTo,DataRequired,URL
+from jobplus.models import User,Company
 
 class UserRegisterForm(FlaskForm):
     username=StringField('username',validators=[DataRequired(),Length(3,24)])
@@ -44,6 +45,9 @@ class CompanyConfigForm(FlaskForm):
     company_url = StringField('company_url',validators=[DataRequired(),URL()])
     describe = StringField('describe',validators=[DataRequired(),Length(6,36)])
     description = StringField('description',validators=[DataRequired(),Length(6,128)])
+
+    def create_company():
+        company = Company()
 
 
 
