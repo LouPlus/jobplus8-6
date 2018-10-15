@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% from "macros.html" import render_pagination %}
-
+<title>{% block title %}职位{% endblock %}</title>
 {% block body %}
 <div class="container">
 	<div class="jumbotron">
@@ -17,7 +17,7 @@
 			<div class="caption">
 				<a href="">
 					<b>{{ job.jobname }}</b>
-					<span class="timesince">{{ job.created_at }}</span>
+					<span class="timesince">  {{(time-job.created_at).days}} 天前</span>
 					<p>经验{{job.exprience }}年</p>
 					<span class="label label-default">{{job.job_description}}</span>
 				</a>
