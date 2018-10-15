@@ -55,9 +55,13 @@ class Job(Base):
 class Company(Base):
     __tablename__ = 'company'
     id=db.Column(db.Integer,primary_key=True)
-    company_name=db.Column(db.String(128),index=True,unique=True,nullable=False)
-    website=db.Column(db.String(128))
-    company_location=db.Column(db.String(64))
+    company_name = db.Column(db.String(24),nullable=False)
+    email = db.Column(db.String(24),nullable=False)
+    password = db.Column(db.String(24),nullable=False)
+    address = db.Column(db.String(36),nullable=False)
+    logo_url = db.Column(db.String(24),nullable=False)
+    company_url = db.Column(db.String(24),nullable=False)
+    short_description = db.Column(db.String(36),nullable=False)
+    description = db.Column(db.String(128),nullable=False)
     job=db.relationship('Job',backref='company',uselist=False)
-    company_description=db.Column(db.String(256))
     
