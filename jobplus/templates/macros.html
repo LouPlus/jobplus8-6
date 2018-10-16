@@ -5,7 +5,7 @@
     {% if field.type == "CSRFTokenField" %}
     {{''}}
     {% elif field.type == "SubmitField" %}
-    {{form.submit(class == "btn btn-primary",type='submit')}}
+    {{form.submit(class = "btn btn-primary",type='submit')}}
     {% elif field.type == "BooleanField"%}
     <div class="checkbox">
         <label>{{field()}}{{field.label.text}}</label>

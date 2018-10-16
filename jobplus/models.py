@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash,check_password_hash
 
 db = SQLAlchemy()
 
@@ -24,12 +25,15 @@ class User(Base,UserMixin):
     def __repr__(self):
         return '<User: {}'.format(self.username)
 
-    # @password.setter
-    # def password(self, orig_password):
-    #     self._password = generate_password_hash(orig_password)
-
-    # def check_password(self, password):
-    #     return check_password_hash(self._password, password)
+    @property
+    def password(self):
+        return self._password
+    @password.setter
+    def password(self, orig_password):
+        self._password = generate_password_hash(orig_password)
+    
+    def check_password(self, password):
+        return check_password_hash(self._password, password)
 
     @property
     def is_admin(self):
