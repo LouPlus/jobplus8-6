@@ -1,7 +1,8 @@
-from jobplus.models import Job,Company
-from flask import render_template,Blueprint,flash,request,current_app
+from jobplus.models import Job,Company,User
+from flask import render_template,Blueprint,flash,request,current_app,redirect,url_for
 from flask_login import login_user,logout_user,login_required
 from datetime import datetime
+from jobplus.forms import UserRegisterForm,LoginForm
 
 front = Blueprint('front',__name__)
 
@@ -14,7 +15,7 @@ def index():
     
     return render_template('index.html',job=job,company=company,time=time_now)
 
-@front.route('/userregister')
+@front.route('/userregister',methods=['POST','GET'])
 def userregister():
     form=UserRegisterForm()
     if form.validate_on_submit():
@@ -29,6 +30,7 @@ def login():
     if form.validate_on_submit():
         user=User.query.filter_by(email=form.email.data).first()
         login_user(user,form.remember_me.data)
+        flash('Login success','success')
         return redirect(url_for('front.index'))
     return render_template('login.html',form=form)
 
