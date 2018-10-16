@@ -27,7 +27,7 @@
 			<div class="caption">
 				<a href="">
 					<b>{{ job[i].jobname }}</b>
-					<span class="timesince">{{ job[i].created_at }}</span>
+					<span class="timesince"> {{(time-job[i].created_at).days}} 天前</span>
 					<p>经验{{job[i].exprience }}年</p>
 					<span class="label label-default">{{job[i].job_description}}</span>
 				</a>
@@ -39,7 +39,7 @@
 {% endfor %}
 </div>
 <p class="read_more">
-<a href="#" class="btn btn-primary btn-lg active" role="button">查看更多</a>
+<a href="{{url_for('front.job')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
 
 <ul class="nav nav-tabs">

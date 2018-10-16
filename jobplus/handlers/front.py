@@ -1,6 +1,7 @@
 from jobplus.models import Job,Company
-from flask import render_template,Blueprint,flash
+from flask import render_template,Blueprint,flash,request,current_app
 from flask_login import login_user,logout_user,login_required
+from datetime import datetime
 
 front = Blueprint('front',__name__)
 
@@ -9,8 +10,9 @@ def index():
 
     job=Job.query.all()
     company = Company.query.all()
+    time_now=datetime.utcnow()
     
-    return render_template('index.html',job=job,company=company)
+    return render_template('index.html',job=job,company=company,time=time_now)
 
 @front.route('/userregister')
 def userregister():
@@ -36,3 +38,17 @@ def logout():
     logout_user()
     flash('logout','success')
     return redirect(url_for('front.index'))
+
+@front.route('/job')
+def job():
+    job=Job.query.all()
+    time_now=datetime.utcnow()
+
+    page = request.args.get('page',default=1,type=int)
+    pagination = Job.query.paginate(
+        page = page,
+        per_page = current_app.config['INDEX_PER_PAGE'],
+        error_out = False
+    )
+    return render_template('./job/job.html',pagination=pagination,job=job,time=time_now)
+

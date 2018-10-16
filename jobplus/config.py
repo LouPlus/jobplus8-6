@@ -1,6 +1,7 @@
 class BaseConfig:
-    SERCET_KEY = 'AAA'
+    SECRET_KEY = 'AAA'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    INDEX_PER_PAGE = 9
 
 class DevelopmentConfig(BaseConfig):
     Debug = True
