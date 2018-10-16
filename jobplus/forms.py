@@ -48,6 +48,11 @@ class CompanyConfigForm(FlaskForm):
 
     def create_company():
         company = Company()
+        self.populate_obj(course)
+        db.session.add(course)
+        db.session.commit()
+        return company
+
 
 
 
