@@ -1,4 +1,4 @@
-from jobplus.models import Job,Company,User
+from jobplus.models import Job,CompanyDetail,User
 from flask import render_template,Blueprint,flash,request,current_app,redirect,url_for
 from flask_login import login_user,logout_user,login_required
 from datetime import datetime
@@ -10,7 +10,7 @@ front = Blueprint('front',__name__)
 def index():
 
     job=Job.query.all()
-    company = Company.query.all()
+    company = CompanyDetail.query.all()
     time_now=datetime.utcnow()
     
     return render_template('index.html',job=job,company=company,time=time_now)

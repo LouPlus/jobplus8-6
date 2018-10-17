@@ -1,5 +1,5 @@
 from faker import Factory
-from jobplus.models import db,Job,User,Company
+from jobplus.models import db,Job,User,CompanyDetail
 fake = Factory().create('zh_CN')
 
 def iter_job():
@@ -24,15 +24,18 @@ def iter_user():
 
 def iter_company():
     for i in range(10):
-        yield Company(
-        company_name = fake.company(),
-        email = fake.ascii_safe_email(),
-        password = fake.password(),
-        address = fake.address(),
-        logo_url = fake.url(),
-        company_url = fake.url(),
-        short_description = fake.word(),
-        description = fake.word()
+        yield CompanyDetail(
+        logo = fake.url(),
+        site = fake.url(),
+        location = fake.address(),
+        description = fake.word(),
+        about = fake.word(),
+        tags = fake.word(),
+        stack = fake.word(),
+        team_introduction = fake.word(),
+        welfares = fake.word(),
+        field = fake.word(),
+        finance_stage = fake.word(),
         )
 
 def run():

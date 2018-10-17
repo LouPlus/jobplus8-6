@@ -3,6 +3,7 @@ from jobplus.forms import CompanyProfileForm
 from flask_login import login_required,current_user
 from jobplus.models import User
 
+
 company = Blueprint('company',__name__,url_prefix='/company')
 
 @company.route('/')
@@ -13,7 +14,7 @@ def index():
 		per_page=12,
 		error_out = False
 		)
-	return render_template('comoany/index.html',pagination=pagination,active='company')
+	return render_template('company/index.html',pagination=pagination,active='company')
 
 @company.route('/profile/',methods=['GET','POST'])
 @login_required

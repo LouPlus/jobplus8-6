@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,TextAreaField
 from wtforms.validators import Length,Email,EqualTo,DataRequired
-from jobplus.models import db,User
+from jobplus.models import db,User,CompanyDetail
+
+class UserRegisterForm(FlaskForm):
     username=StringField('username',validators=[DataRequired(),Length(3,24)])
     email=StringField('email',validators=[DataRequired(),Email()])
     password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
@@ -36,9 +38,9 @@ class LoginForm(FlaskForm):
 
 class CompanyProfileForm(FlaskForm):
     name = StringField('企业名称')
-    email = StringField('邮箱', validators=[Required(), Email()])
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
     password = PasswordField('密码(不填写保持不变)')
-    slug = StringField('Slug', validators=[Required(), Length(3, 24)])
+    slug = StringField('Slug', validators=[DataRequired(), Length(3, 24)])
     location = StringField('地址', validators=[Length(0, 64)])
     site = StringField('公司网站', validators=[Length(0, 64)])
     logo = StringField('Logo')

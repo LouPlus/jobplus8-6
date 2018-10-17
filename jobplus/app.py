@@ -2,7 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from jobplus.config import configs
 from flask_login import LoginManager
-from jobplus.models import db,User,Job,Company
+from jobplus.models import db,User,Job,CompanyDetail
 from flask_login import LoginManager
 
 def register_extensions(app):
