@@ -26,9 +26,13 @@ def iter_company():
     for i in range(10):
         yield Company(
         company_name = fake.company(),
-        website = fake.url(),
-        company_location = fake.address(),
-        company_description = fake.text()
+        email = fake.ascii_safe_email(),
+        password = fake.password(),
+        address = fake.address(),
+        logo_url = fake.url(),
+        company_url = fake.url(),
+        short_description = fake.word(),
+        description = fake.word()
         )
 
 def run():

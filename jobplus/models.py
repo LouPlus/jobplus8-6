@@ -57,11 +57,29 @@ class Job(Base):
     
 
 class Company(Base):
-    __tablename__ = 'company'
-    id=db.Column(db.Integer,primary_key=True)
-    company_name=db.Column(db.String(128),index=True,unique=True,nullable=False)
-    website=db.Column(db.String(128))
-    company_location=db.Column(db.String(64))
-    job=db.relationship('Job',backref='company',uselist=False)
-    company_description=db.Column(db.String(256))
-    
+class CompanyDetail(Base):
+    __tablename__ = 'company_detail'
+
+    id = db.Column(db.Integer, primary_key=True)
+    logo = db.Column(db.String(256), nullable=False)
+    site = db.Column(db.String(128), nullable=False)
+    location = db.Column(db.String(24), nullable=False)
+    description = db.Column(db.String(100))
+    about = db.Column(db.String(1024))
+    tags = db.Column(db.String(128))
+    stack = db.Column(db.String(128))
+    team_introduction = db.Column(db.String(256))
+    welfares = db.Column(db.String(256))
+    field = db.Column(db.String(128))
+    finance_stage = db.Column(db.String(128))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
+    user = db.relationship('User', uselist=False, backref=db.backref('company_detail', uselist=False))
+
+
+    def __repr__(self):
+        return '<Company: {}'.format(self.username)
+
+    @property
+    def url(self):
+        return url_for('company.detail',company_id=self.id)
+
