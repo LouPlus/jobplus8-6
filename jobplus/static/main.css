@@ -21,3 +21,9 @@ text-align: center;
 	text-align: center;
 
 }
+
+a,
+a:hover,
+a:visited{
+	text-decoration: none;
+}

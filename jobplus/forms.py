@@ -1,13 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField, ValidationError, IntegerField, TextAreaField
 from wtforms.validators import Length,Email,EqualTo,DataRequired,URL
-from jobplus.models import User,Company
+from jobplus.models import User,CompanyDetail,db
 
 class UserRegisterForm(FlaskForm):
     username=StringField('username',validators=[DataRequired(),Length(3,24)])
     email=StringField('email',validators=[DataRequired(),Email()])
     password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
-    repeat_password=PasswordField('repeatpassword',validators=[Required(),EqualTo('password')])
+    repeat_password=PasswordField('repeatpassword',validators=[DataRequired(),EqualTo('password')])
     submit=SubmitField('Submit')
     def create_user(self):
     	user=User()
@@ -24,7 +24,7 @@ class UserRegisterForm(FlaskForm):
     	if User.query.filter_by(email=field.data).first():
     		raise ValidationError('email already exist')
 class LoginForm(FlaskForm):
-    email=EmailField('email',validators=[DataRequired(),Email()])
+    email=StringField('email',validators=[DataRequired(),Email()])
     password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
     remember_me=BooleanField('Remember me')
     submit=SubmitField('Submit')
@@ -32,26 +32,39 @@ class LoginForm(FlaskForm):
     	if not User.query.filter_by(email=field.data).first():
     		raise ValidationError('email not register')
     def validate_password(self,field):
-    	user=User.query.filter_by(email=self.email.data).first():
+    	user=User.query.filter_by(email=self.email.data).first()
     	if user and not user.check_password(field.data):
     		raise ValidationError('Wrong password')
 
-class CompanyConfigForm(FlaskForm):
-    company_name = StringField('companyname',validators=[DataRequired(),Length(6,24)])
-    email = EmailField('email',validators=[DataRequired(),Email()])
-    password = PasswordField('password',validators=[DataRequired(),Length(6,24)])
-    address = StringField('address',validators=[DataRequired(),Length(6,36)])
-    logo_url = StringField('logo_url',validators=[DataRequired(),URL()])
-    company_url = StringField('company_url',validators=[DataRequired(),URL()])
-    describe = StringField('describe',validators=[DataRequired(),Length(6,36)])
-    description = StringField('description',validators=[DataRequired(),Length(6,128)])
+class CompanyProfileForm(FlaskForm):
+    name = StringField('企业名称')
+    email = StringField('邮箱', validators=[Required(), Email()])
+    password = PasswordField('密码(不填写保持不变)')
+    slug = StringField('Slug', validators=[Required(), Length(3, 24)])
+    location = StringField('地址', validators=[Length(0, 64)])
+    site = StringField('公司网站', validators=[Length(0, 64)])
+    logo = StringField('Logo')
+    description = StringField('一句话描述', validators=[Length(0, 100)])
+    about = TextAreaField('公司详情', validators=[Length(0, 1024)])
+    submit = SubmitField('提交')
 
-    def create_company():
-        company = Company()
-        self.populate_obj(course)
-        db.session.add(course)
+    def updated_profile(self,user):
+        user.name = self.name.data
+        user.email - self.email.data
+        if self.password.data:
+            user.password = self.password.data
+
+        if user.company_detail:
+            company_detail = user.company_detail
+
+        else:
+            company_detail = CompanyDetail()
+            company_detail.user_id = user.user_id
+        self.populate_obj(company_detail)
+        db.session.add(user)
+        db.session.add(company_detail)
         db.session.commit()
-        return company
+
 
 
 
