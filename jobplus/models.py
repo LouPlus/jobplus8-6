@@ -42,22 +42,24 @@ class User(Base,UserMixin):
 
 class Job(Base):
     __tablename__ = 'job'
-    id=db.Column(db.Integer,primary_key=True)
-    jobname=db.Column(db.String(64),nullable=False)
-    salary=db.Column(db.String(64))
-    exprience=db.Column(db.String(64))
-    location=db.Column(db.String(64))
-    job_description=db.Column(db.String(256))
-    job_requirement=db.Column(db.String(256))
-    company_id=db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
+    id = db.Column(db.Integer,primary_key=True)
+    jobname = db.Column(db.String(64),nullable=False)
+    salary_min = db.Column(db.String(64))
+    salary_max = db.Column(db.String(64))
+    exprience = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    job_tag = db.Column(db.String(64))
+    job_description = db.Column(db.String(256))
+    job_requirement = db.Column(db.String(256))
+    company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     
 
 class Company(Base):
     __tablename__ = 'company'
     id=db.Column(db.Integer,primary_key=True)
-    company_name=db.Column(db.String(128),index=True,unique=True,nullable=False)
-    website=db.Column(db.String(128))
-    company_location=db.Column(db.String(64))
-    job=db.relationship('Job',backref='company',uselist=False)
-    company_description=db.Column(db.String(256))
+    company_name = db.Column(db.String(128),index=True,unique=True,nullable=False)
+    website = db.Column(db.String(128))
+    company_location = db.Column(db.String(64))
+    job = db.relationship('Job',backref='company',uselist=False)
+    company_description = db.Column(db.String(256))
     

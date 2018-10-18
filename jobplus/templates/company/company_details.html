@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container-fluid header">
+	<div class="jumbotron">
+		<div class="container">
+		<h2>{{ company.company_name }}</h2>
+
+		<span> {{ company.website }}</span>
+		</div>
+		</p>
+	</div>
+</div>
+<div class="container">
+	<div class="col-md-8">		
+		<ul id="myTab" class="nav nav-tabs">
+			<li class="active"><a href="#home" data-toggle="tab">公司介绍</a></li>
+			<li><a href="#job" data-toggle="tab">在招职位</a></li>
+		</ul>
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="home">
+				<span>{{ company.company_description }}</span>
+			</div>
+			<div class="tab-pane fade" id="job">
+				{% for job in job %}
+
+					<div class="job-item"><a href="{{ url_for('front.job_details',job_id=job.id)}}" style="text-decoration:none;">
+						<h3>{{ job.jobname }}</h3>
+						<h4><p class="job-salary">{{ job.salary_min }} - {{ job.salary_max }}</p>经验 {{ job.exprience }}年</h4> 
+						
+						</a>
+					</div>
+
+
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+	<div class="col-md-4">
+		<h4>这里放公司logo</h4>
+		<h4>asdf</h4>
+		<p>领域:企业类型</p>
+		<p>城市:hhh</p>
+
+	</div>
+</div>
+
+{% endblock %}
+
