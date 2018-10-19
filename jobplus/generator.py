@@ -1,4 +1,5 @@
 from faker import Factory
+import random
 from jobplus.models import db,Job,User,Company
 import random
 fake = Factory().create('zh_CN')
@@ -18,12 +19,15 @@ def iter_job():
         )
 
 def iter_user():
-    for i in range(10):
+    for i in range(15):
         yield User(
         username = fake.name(),
         email = fake.ascii_safe_email(),
         job = fake.job(),
-        _password = fake.password()
+        _password = fake.password(),
+        phone=fake.phone_number(),
+        realname=fake.name(),
+        role=random.choice([10,20])
         )
 
 def iter_company():
@@ -32,7 +36,8 @@ def iter_company():
         company_name = fake.company(),
         website = fake.url(),
         company_location = fake.address(),
-        company_description = fake.text()
+        company_description = fake.text(),
+        user_id=random.randint(1,15)
         )
 
 def run():

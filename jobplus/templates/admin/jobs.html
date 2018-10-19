@@ -1,0 +1,42 @@
+{% extends "admin/index.html"%}
+{% from "macros.html" import render_pagination %}
+{% block title %}
+Admin-Jobs
+{% endblock %}
+
+{% block admin %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>jobname</th>
+			<th>company</th>
+			<th>publish time</th>
+			<th>condition</th>
+		</tr>
+		<tbody>
+			{% for job in pagination.items %}
+			<tr>
+				<td>{{job.id}}</td>
+				<td>{{job.jobname}}</td>
+				<td>{{job.company.company_name}}</td>
+				<td>{{job.created_at}}</td>
+				<td>
+					<div class="btn-group" role="group">
+						<a href="{{url_for('admin.online_job',id=job.id)}}" type="button" class="btn btn-default">
+							{% if job.online %}
+							<span aria-hidden="true">downline</span>
+							{% else %}
+							<span aria-hidden="true">online</spam>
+							{% endif %}
+						</a>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</thead>
+</table>
+
+{{ render_pagination(pagination,'admin.jobs') }}
+{% endblock %}

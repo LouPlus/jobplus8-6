@@ -20,7 +20,10 @@ class User(Base,UserMixin):
     username = db.Column(db.String(32),unique=True,index=True,nullable=False)
     email = db.Column(db.String(64),unique=True,index=True,nullable=False)
     _password = db.Column('password',db.String(256),nullable=False)
+    phone=db.Column(db.String(16))
+    realname=db.Column(db.String(64))
     role = db.Column(db.SmallInteger,default=ROLE_USER)
+    allow=db.Column(db.SmallInteger,default=1)
     job = db.Column(db.String(64))
     def __repr__(self):
         return '<User: {}'.format(self.username)
@@ -56,6 +59,7 @@ class Job(Base):
     job_description = db.Column(db.String(256))
     job_requirement = db.Column(db.String(256))
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
+    online=db.Column(db.SmallInteger,default=1)
     
 
 class Company(Base):
@@ -66,4 +70,6 @@ class Company(Base):
     company_location = db.Column(db.String(64))
     job = db.relationship('Job',backref='company',uselist=False)
     company_description = db.Column(db.String(256))
+    user_id=db.Column(db.Integer,db.ForeignKey('user.id'))
+    user=db.relationship('User',uselist=False,backref=db.backref('company',uselist=False))
     
