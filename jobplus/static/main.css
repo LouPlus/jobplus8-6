@@ -25,3 +25,16 @@ text-align: center;
 .nav-pagination {
 	text-align: center;
 }
+
+.job-item {
+    border: 1px solid #eee;
+    border-left: 5px solid #00b38a;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+
+}
+
+.job-salary {
+	color: red
+}
+

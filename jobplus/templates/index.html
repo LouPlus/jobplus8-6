@@ -25,7 +25,7 @@
 	<div class="col-sm-6 col-md-4">
 		<div class="job-box">
 			<div class="caption">
-				<a href="">
+				<a href="{{ url_for('front.job_details',job_id=job[i].id)}}">
 					<b>{{ job[i].jobname }}</b>
 					<span class="timesince"> {{(time-job[i].created_at).days}} 天前</span>
 					<p>经验{{job[i].exprience }}年</p>
