@@ -9,7 +9,7 @@ front = Blueprint('front',__name__)
 @front.route('/')
 def index():
 
-    job=Job.query.all()
+    job=Job.query.filter_by(online=1)
     company = Company.query.all()
     time_now=datetime.utcnow()
     
@@ -29,9 +29,12 @@ def login():
     form=LoginForm()
     if form.validate_on_submit():
         user=User.query.filter_by(email=form.email.data).first()
-        login_user(user,form.remember_me.data)
-        flash('Login success','success')
-        return redirect(url_for('front.index'))
+        if user.allow==1:
+            login_user(user,form.remember_me.data)
+            flash('Login success','success')
+            return redirect(url_for('front.index'))
+        else:
+            flash('this user is forbidden','warning')
     return render_template('login.html',form=form)
 
 @front.route('/logout')

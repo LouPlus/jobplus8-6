@@ -1,0 +1,65 @@
+{% extends "admin/index.html"%}
+{% from "macros.html" import render_pagination %}
+{% block title %}
+Admin-Users
+{% endblock %}
+
+{% block admin %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>username</th>
+			<th>type</th>
+			<th>email</th>
+			<th>phone</th>
+			<th>realname</th>
+			<th>website</th>
+			<th>operator</th>
+		</tr>
+		<tbody>
+			{% for user in pagination.items %}
+			<tr>
+				<td>{{user.id}}</td>
+				<td>{{user.username}}</td>
+				<td>{% if user.is_company %}user {% else %}company{%endif%}</td>
+				<td>{{user.email}}</td>
+				<td>{{user.phone}}</td>
+				<td>{{user.realname}}</td>
+				<td>{%if user.is_company %}{{user.website}}{%endif%}</td>
+				<td>
+					<div class="btn-group" role="group">
+						<a href="{{url_for('admin.edit_user',id=user.id)}}" type="button" class="btn btn-default" title="edit">
+							<span class="glyphicon" title="edit" aria-hidden="true">edit</span>
+						</a>
+						{% if user.allow %}
+						<a href="{{url_for('admin.allow_user',id=user.id)}}" type="button" class="btn btn-default" title="forbiden">
+							<span class="glyphicon" title="forbiden" aria-hidden="true">forbiden</span>
+						</a>
+						{% else %}
+						<a href="{{url_for('admin.allow_user',id=user.id)}}" type="button" class="btn btn-default" title="use">
+							<span class="glyphicon" title="use" aria-hidden="true">use</span>
+						</a>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</thead>
+</table>
+
+{{ render_pagination(pagination,'admin.users') }}
+
+{% endblock %}
+{%block operation%}
+<a href="{{url_for('admin.create_user')}}" type='button' class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	Add User
+</a>
+<br>
+<a href="#" type="button" class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	Add Company
+</a>
+{% endblock%}

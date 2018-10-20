@@ -34,7 +34,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url_for('front.job')}}">职位</a></li>
 						<li><a href="#">公司</a></li>
-						
+						{% if current_user.is_authenticated and current_user.is_admin %}
+						<li><a href="{{url_for('admin.index')}}">console</a></li>
+						{% endif %}	
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">

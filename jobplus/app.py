@@ -16,9 +16,9 @@ def register_extensions(app):
 	login_manager.login_view='front.login'
 
 def register_blueprint(app):
-    from .handlers import front
+    from .handlers import front,admin
     app.register_blueprint(front)
-
+    app.register_blueprint(admin)
 
 def create_app(config):
     app = Flask(__name__)

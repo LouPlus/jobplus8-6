@@ -17,12 +17,32 @@ class UserRegisterForm(FlaskForm):
     	db.session.add(user)
     	db.session.commit()
     	return user
+    def update_user(self,user):
+        self.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        return user
     def validate_username(self,field):
     	if User.query.filter_by(username=field.data).first():
     		raise ValidationError('User already exist')
     def validate_email(self,field):
     	if User.query.filter_by(email=field.data).first():
     		raise ValidationError('email already exist')
+class EditForm(FlaskForm):
+    email=StringField('email',validators=[DataRequired(),Email()])
+    password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
+    realname=StringField('realname',validators=[DataRequired(),Length(3,24)])
+    phone=StringField('phone',validators=[DataRequired(),Length(3,11)])
+    submit=SubmitField('Submit')
+    def update_user(self,user):
+        self.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        return user 
+    def validate_email(self,field):
+        if not User.query.filter_by(email=field.data).first():
+            raise ValidationError('email not exit')
+
 class LoginForm(FlaskForm):
     email=StringField('email',validators=[DataRequired(),Email()])
     password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
