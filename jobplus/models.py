@@ -59,6 +59,7 @@ class Job(Base):
     job_description = db.Column(db.String(256))
     job_requirement = db.Column(db.String(256))
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
+    company = db.relationship('CompanyDetail',uselist=False)
     online=db.Column(db.SmallInteger,default=1)
     
 
@@ -82,7 +83,7 @@ class CompanyDetail(Base):
 
 
     def __repr__(self):
-        return '<Company: {}'.format(self.username)
+        return '<Company: {}'.format(self.id)
 
     @property
     def url(self):

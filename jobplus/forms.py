@@ -70,7 +70,7 @@ class CompanyProfileForm(FlaskForm):
 
     def updated_profile(self,user):
         user.name = self.name.data
-        user.email - self.email.data
+        user.email = self.email.data
         if self.password.data:
             user.password = self.password.data
 
@@ -84,6 +84,40 @@ class CompanyProfileForm(FlaskForm):
         db.session.add(user)
         db.session.add(company_detail)
         db.session.commit()
+
+class PublishForm(FlaskForm):
+    jobname=StringField('jobname',validators=[DataRequired()])
+    salary_min=StringField('min salary')
+    salary_max=StringField('max salary')
+    location=StringField('location')
+    job_tag=StringField('job tag')
+    job_description=StringField('job description')
+    submit=SubmitField('Publish')
+    def publish_job(self):
+        job=Job()
+        job.jobname=self.jobname.data
+        job.salary_min=self.salary_min.data
+        job.salary_max=self.salary_max.data
+        job.location=self.location.data
+        job.job_tag=self.job_tag.data
+        job.job_description=self.job_description.data
+        db.session.add(job)
+        db.session.commit()
+        return job
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
