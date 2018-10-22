@@ -31,6 +31,9 @@ def profile():
 		return redirect(url_for('front.index'))
 	return render_template('company/profile.html',form=form)
 
+
+
+
 @company.route('/<int:company_id>/admin')
 @company_required
 def admin_index(company_id):
