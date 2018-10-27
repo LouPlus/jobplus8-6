@@ -1,4 +1,4 @@
-from jobplus.models import Job,CompanyDetail,User
+from jobplus.models import Job,CompanyDetail,User,db
 from flask import render_template,Blueprint,flash,request,current_app,redirect,url_for
 from flask_login import login_user,logout_user,login_required
 from datetime import datetime
@@ -24,6 +24,18 @@ def userregister():
         return redirect(url_for('front.login'))
     return render_template('userregister.html',form=form)
 
+@front.route('/companyregister',methods=['GET','POST'])
+def companyregister():
+    form=UserRegisterForm()
+    if form.validate_on_submit():
+        u=form.create_user()
+        u.role=User.ROLE_COMPANY
+        db.session.add(u)
+        db.session.commit()      
+        flash('Register success,Please Login','success')
+        return redirect(url_for('front.login'))
+    return render_template('companyregister.html',form=form)
+
 @front.route('/login',methods=['GET','POST'])
 def login():
     form=LoginForm()
@@ -32,7 +44,12 @@ def login():
         if user.allow==1:
             login_user(user,form.remember_me.data)
             flash('Login success','success')
-            return redirect(url_for('front.index'))
+            if user.is_company:
+                return redirect(url_for('company.profile'))
+            if user.is_admin:
+                return redirect(url_for('front.index'))
+            else:
+                return redirect(url_for('user.profile'))
         else:
             flash('this user is forbidden','warning')
     return render_template('login.html',form=form)

@@ -19,7 +19,7 @@ def iter_job():
             )
 
 def iter_user():
-    for i in range(10):
+    for i in range(15):
         yield User(
         username = fake.name(),
         email = fake.ascii_safe_email(),
@@ -27,11 +27,12 @@ def iter_user():
         _password = fake.password(),
         phone=fake.phone_number(),
         realname=fake.name(),
+        resume_url=fake.url(),
         role=10
         )
 
 def iter_companyuser():
-    for i in range(10):
+    for i in range(15):
         yield User(
         username = fake.company(),
         email = fake.ascii_safe_email(),

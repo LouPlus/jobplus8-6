@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_pagination %}
+{% block title %}
+Admin
+{% endblock %}
+{% block body %}
+<div class="row">
+	<div class="col-md-3">
+		<h4>company console</h4>
+		<div class="list-group">
+			<a href="{{url_for('company.admin_index',company_id=company_id)}}" class="list-group-item">Job Manage</a>
+			<a href="{{url_for('company.admin_apply',company_id=company_id)}}" class="list-group-item">Deliver Manage</a>
+		</div>
+
+
+		{% block operation %}
+		<a href="{{url_for('company.publish_job',company_id=current_user.id)}}" type='button' class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			Publish Job
+		</a>
+		{% endblock %}
+	</div>
+	<div class="col-md-9">
+		{% block admin%}
+		<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>jobname</th>
+				<th>company</th>
+				<th>publish time</th>
+				<th>condition</th>
+			</tr>
+			<tbody>
+				{% for job in pagination.items %}
+				<tr>
+					<td>{{job.id}}</td>
+					<td>{{job.jobname}}</td>
+					<td>{{current_user.username}}</td>
+					<td>{{job.created_at}}</td>
+					<td>
+						<div class="btn-group" role="group">
+							<a href="{{url_for('company.online_job',id=job.id)}}" type="button" class="btn btn-default">
+								{% if job.online %}
+								<span aria-hidden="true">downline</span>
+								{% else %}
+							    <span aria-hidden="true">online</spam>
+							    {% endif %}
+							</a>
+							<a href="{{url_for('company.edit_job',company_id=current_user.id,job_id=job.id)}}" type="button" class="btn btn-default">
+								<span aria-hidden="true">edit</span></a>
+							<a href="{{url_for('company.delete_job',company_id=current_user.id,job_id=job.id)}}" type="button" class="btn btn-default">
+								<span aria-hidden="true">delete</span></a>							
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</thead>
+        </table>
+		{% endblock %}
+	</div>
+</div>
+{% endblock %}
+{{ render_pagination(pagination,'company.admin_index') }}

@@ -1,60 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% from "macros.html" import render_pagination %}
-{% block title %}
-Admin
-{% endblock %}
+<title>{% block title %}Company{% endblock %}</title>
 {% block body %}
-<div class="row">
-	<div class="col-md-3">
-		<h4>company console</h4>
-		<div class="list-group">
-			<a href="#" class="list-group-item">Job Manage</a>
-			<a href="#" class="list-group-item">Deliver Manage</a>
-		</div>
-
-
-		{% block operation %}
-		<a href="{{url_for('company.publish_job',company_id=current_user.id)}}" type='button' class="btn btn-primary">
-			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			Publish Job
-		</a>
-		{% endblock %}
-	</div>
-	<div class="col-md-9">
-		{% block admin%}
-		<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>jobname</th>
-				<th>company</th>
-				<th>publish time</th>
-				<th>condition</th>
-			</tr>
-			<tbody>
-				{% for job in pagination.items %}
-				<tr>
-					<td>{{job.id}}</td>
-					<td>{{job.jobname}}</td>
-					<td>{{job.company.company_name}}</td>
-					<td>{{job.created_at}}</td>
-					<td>
-						<div class="btn-group" role="group">
-							<a href="#" type="button" class="btn btn-default">
-								<span aria-hidden="true">downline</span>
-								<span aria-hidden="true">edit</span>
-								<span aria-hidden="true">delete</span>
-							</a>
-						</div>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</thead>
-        </table>
-
-{{ render_pagination(pagination,'company.index') }}
-		{% endblock %}
+<div class="container">
+	<div class="jumbotron">
+	
+		<h1>Todo:Just a test</h1>
+		<p>Company</p>
 	</div>
 </div>
+
+<div class="job-list">
+{% for company in pagination.items %}
+	<div class="col-sm-6 col-md-4">
+		<div class="job-box">
+			<div class="caption">
+				<a href="#">
+					<h3>{{ company.username }}</h3>
+					
+				</a>
+
+			</div>
+		   
+		</div>
+	</div>
+{% endfor %}
+</div>
+{{ render_pagination(pagination,'front.job')}}
 {% endblock %}
