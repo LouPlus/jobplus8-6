@@ -25,6 +25,7 @@ class User(Base,UserMixin):
     role = db.Column(db.SmallInteger,default=ROLE_USER)
     allow=db.Column(db.SmallInteger,default=1)
     job = db.Column(db.String(64))
+    
     def __repr__(self):
         return '<User: {}'.format(self.username)
 
@@ -59,7 +60,7 @@ class Job(Base):
     job_description = db.Column(db.String(256))
     job_requirement = db.Column(db.String(256))
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
-    company = db.relationship('CompanyDetail',uselist=False)
+    company = db.relationship('CompanyDetail',uselist=False,backref=db.backref('job'))
     online=db.Column(db.SmallInteger,default=1)
     
 
@@ -88,3 +89,26 @@ class CompanyDetail(Base):
     @property
     def url(self):
         return url_for('company.detail',company_id=self.id)
+
+
+class Delivery(Base):
+    __tablename__ = 'delivery'
+
+    STATUS_WAITING = 1
+    STATUS_REJECT = 2
+    STATUS_ACCEPT = 3
+
+    id = db.Column(db.Integer,primary_key=True)
+    job_id = db.Column(db.Integer,db.ForeignKey('job.id',ondelete='SET NULL'))
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
+    company_id = db.Column(db.Integer)
+    status = db.Column(db.SmallInteger,default= STATUS_WAITING)
+    response = db.Column(db.String(256))
+
+    @property 
+    def user(self):
+        return User.query.get(self.user_id)
+
+    @property 
+    def job(self):
+        return Job.query.get(self.job_id)
