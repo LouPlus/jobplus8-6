@@ -11,6 +11,7 @@
 </div>
 
 <div class="job-list">
+<div class="container">
 {% for job in pagination.items %}
 	<div class="col-sm-6 col-md-4">
 		<div class="job-box">
@@ -27,6 +28,7 @@
 		</div>
 	</div>
 {% endfor %}
+</div>
 </div>
 {{ render_pagination(pagination,'front.job')}}
 {% endblock %}

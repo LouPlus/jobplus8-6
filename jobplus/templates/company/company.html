@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% from "macros.html" import render_pagination %}
+<title>{% block title %}公司{% endblock %}</title>
+{% block body %}
+<div class="container">
+	<div class="jumbotron">
+	
+		<h1>公司列表</h1>
+		<p>Wahahaha</p>
+	</div>
+</div>
+
+<div class="job-list">
+<div class="container">
+{% for company in pagination.items %}
+	<div class="col-sm-6 col-md-4">
+		<div class="job-box">
+			<div class="caption">
+				<a href="{{ url_for('company.company_details',company_id=company.company.id)}}">
+					<h3>{{ company.username }}</h3><br>
+					<p>{{ company.company.field }}</p>
+
+<!-- 职位数量没有实现 -->
+
+				</a>
+
+			</div>
+		   
+		</div>
+	</div>
+
+{% endfor %}
+</div>
+</div>
+{{ render_pagination(pagination,'company.index')}}
+{% endblock %}

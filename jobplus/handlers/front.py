@@ -78,12 +78,8 @@ def job():
 def job_details(job_id):
     time_now = datetime.utcnow()
     job = Job.query.filter_by(id = job_id).first()
-    company = Company.query.filter_by(id = job.company_id)
+    company = CompanyDetail.query.filter_by(id = job.company_id)
     return render_template('./job/job_details.html',job = job,company = company,time=time_now)
 
 
-@front.route('/company/<int:company_id>')
-def company_details(company_id):
-    job = Job.query.filter_by(company_id = company_id)
-    company = Company.query.filter_by(id = company_id).first()
-    return render_template('/company/company_details.html',company = company,job=job)
+

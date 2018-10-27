@@ -50,8 +50,9 @@
 	<div class="col-sm-6 col-md-3">
 		<div class="com-box">
 			<div class="caption">
-				<a href="">
-					<b>{{ company[i].description }}</b>
+				<a href="{{ url_for('company.company_details',company_id=company[i].id)}}">
+					<b>{{ company[i].user.username }}</b>
+					<b>{{ job_count }}</b>
 					
 
 				</a>
@@ -63,7 +64,7 @@
 {% endfor %}
 </div>
 <p class="read_more">
-<a href="#" class="btn btn-primary btn-lg active" role="button">查看更多</a>
+<a href="{{url_for('company.index')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
 
 
