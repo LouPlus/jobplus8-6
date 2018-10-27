@@ -33,7 +33,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url_for('front.job')}}">职位</a></li>
-						<li><a href="#">公司</a></li>
+						<li><a href="{{ url_for('company.index')}}">公司</a></li>
 						{% if current_user.is_authenticated and current_user.is_company %}
 						<li><a href="{{url_for('company.index',company_id=current_user.id)}}">console</a></li>
 						{% endif %}

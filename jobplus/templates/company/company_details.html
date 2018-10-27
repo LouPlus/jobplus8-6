@@ -3,9 +3,9 @@
 <div class="container-fluid header">
 	<div class="jumbotron">
 		<div class="container">
-		<h2>{{ company.company_name }}</h2>
-
-		<span> {{ company.website }}</span>
+		<h2>{{ company.user.username }}</h2>
+		<span> {{ company.tags }}</span> <br>
+		<span> {{ company.site }}</span>
 		</div>
 		</p>
 	</div>
@@ -14,17 +14,18 @@
 	<div class="col-md-8">		
 		<ul id="myTab" class="nav nav-tabs">
 			<li class="active"><a href="#home" data-toggle="tab">公司介绍</a></li>
-			<li><a href="#job" data-toggle="tab">在招职位</a></li>
+			<li><a href="#job" data-toggle="tab">在招职位({{ job_count }})</a></li>
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="home">
-				<span>{{ company.company_description }}</span>
+				<span>{{ company.description }}</span>
 			</div>
 			<div class="tab-pane fade" id="job">
 				{% for job in job %}
 
 					<div class="job-item"><a href="{{ url_for('front.job_details',job_id=job.id)}}" style="text-decoration:none;">
 						<h3>{{ job.jobname }}</h3>
+						<h3></h3>
 						<h4><p class="job-salary">{{ job.salary_min }} - {{ job.salary_max }}</p>经验 {{ job.exprience }}年</h4> 
 						
 						</a>
@@ -38,10 +39,10 @@
 
 	</div>
 	<div class="col-md-4">
-		<h4>这里放公司logo</h4>
-		<h4>asdf</h4>
-		<p>领域:企业类型</p>
-		<p>城市:hhh</p>
+		<h4>公司基本信息</h4>
+		<p>领域: {{ company.field }}</p>
+		<p>融资: {{ company.finance_stage }}</p>
+		<p>城市: {{ company.location }}</p>
 
 	</div>
 </div>
