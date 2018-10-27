@@ -4,37 +4,37 @@ from wtforms.validators import Length,Email,EqualTo,DataRequired
 from jobplus.models import db,User,CompanyDetail,Job
 
 class UserRegisterForm(FlaskForm):
-    username=StringField('username',validators=[DataRequired(),Length(3,24)])
-    email=StringField('email',validators=[DataRequired(),Email()])
-    password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
-    repeat_password=PasswordField('repeatpassword',validators=[DataRequired(),EqualTo('password')])
-    submit=SubmitField('Submit')
+    username=StringField('用户名',validators=[DataRequired(),Length(3,24)])
+    email=StringField('邮箱',validators=[DataRequired(),Email()])
+    password=PasswordField('密码',validators=[DataRequired(),Length(6,24)])
+    repeat_password=PasswordField('重复密码',validators=[DataRequired(),EqualTo('password')])
+    submit=SubmitField('提交')
     def create_user(self):
-    	user=User()
-    	user.username=self.username.data
-    	user.email=self.email.data
-    	user.password=self.password.data
-    	db.session.add(user)
-    	db.session.commit()
-    	return user
+        user=User()
+        user.username=self.username.data
+        user.email=self.email.data
+        user.password=self.password.data
+        db.session.add(user)
+        db.session.commit()
+        return user
     def update_user(self,user):
         self.populate_obj(user)
         db.session.add(user)
         db.session.commit()
         return user
     def validate_username(self,field):
-    	if User.query.filter_by(username=field.data).first():
-    		raise ValidationError('User already exist')
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('用户名已存在')
     def validate_email(self,field):
-    	if User.query.filter_by(email=field.data).first():
-    		raise ValidationError('email already exist')
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('邮箱已存在')
 
 class EditForm(FlaskForm):
-    email=StringField('email',validators=[DataRequired(),Email()])
-    password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
-    realname=StringField('realname',validators=[DataRequired(),Length(3,24)])
-    phone=StringField('phone',validators=[DataRequired(),Length(3,11)])
-    submit=SubmitField('Submit')
+    email=StringField('邮箱',validators=[DataRequired(),Email()])
+    password=PasswordField('密码',validators=[DataRequired(),Length(6,24)])
+    realname=StringField('真实姓名',validators=[DataRequired(),Length(3,24)])
+    phone=StringField('电话',validators=[DataRequired(),Length(3,11)])
+    submit=SubmitField('提交')
     def update_user(self,user):
         self.populate_obj(user)
         db.session.add(user)
@@ -45,17 +45,17 @@ class EditForm(FlaskForm):
             raise ValidationError('email not exit')
 
 class LoginForm(FlaskForm):
-    email=StringField('email',validators=[DataRequired(),Email()])
-    password=PasswordField('password',validators=[DataRequired(),Length(6,24)])
-    remember_me=BooleanField('Remember me')
-    submit=SubmitField('Submit')
+    email=StringField('邮箱',validators=[DataRequired(),Email()])
+    password=PasswordField('密码',validators=[DataRequired(),Length(6,24)])
+    remember_me=BooleanField('记住我')
+    submit=SubmitField('提交')
     def validate_email(self,field):
-    	if not User.query.filter_by(email=field.data).first():
-    		raise ValidationError('email not register')
+        if not User.query.filter_by(email=field.data).first():
+            raise ValidationError('邮箱未注册')
     def validate_password(self,field):
-    	user=User.query.filter_by(email=self.email.data).first()
-    	if user and not user.check_password(field.data):
-    		raise ValidationError('Wrong password')
+        user=User.query.filter_by(email=self.email.data).first()
+        if user and not user.check_password(field.data):
+            raise ValidationError('密码错误')
 
 class CompanyProfileForm(FlaskForm):
     name = StringField('企业名称')
@@ -89,9 +89,9 @@ class CompanyProfileForm(FlaskForm):
         db.session.commit()
 
 class UserProfileForm(FlaskForm):
-    name = StringField('名称')
+    name = StringField('真实姓名')
     email = StringField('邮箱', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number',validators=[DataRequired()])
+    phone = StringField('手机号码',validators=[DataRequired()])
     password = PasswordField('密码(不填写保持不变)')
     submit = SubmitField('提交')
 

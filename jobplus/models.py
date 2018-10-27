@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy 
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from werkzeug.security import generate_password_hash,check_password_hash
 
 db = SQLAlchemy()
@@ -25,6 +25,7 @@ class User(Base,UserMixin):
     role = db.Column(db.SmallInteger,default=ROLE_USER)
     allow=db.Column(db.SmallInteger,default=1)
     job = db.Column(db.String(64))
+    resume_url = db.Column(db.String(64))
     
     def __repr__(self):
         return '<User: {}'.format(self.username)
@@ -62,6 +63,11 @@ class Job(Base):
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('CompanyDetail',uselist=False,backref=db.backref('job'))
     online=db.Column(db.SmallInteger,default=1)
+
+    @property 
+    def current_user_is_applied(self):
+        d = Delivery.query.filter_by(job_id=self.id, user_id=current_user.id).first()
+        return (d is not None)
     
 
 class CompanyDetail(Base):

@@ -16,7 +16,7 @@
 	<div class="col-sm-6 col-md-4">
 		<div class="job-box">
 			<div class="caption">
-				<a href="{{ url_for('front.job_details',job_id=job.id)}}">
+				<a href="{{ url_for('job.job_details',job_id=job.id)}}">
 					<b>{{ job.jobname }}</b>
 					<span class="timesince">  {{(time-job.created_at).days}} 天前</span>
 					<p>经验{{job.exprience }}年</p>
@@ -30,5 +30,5 @@
 {% endfor %}
 </div>
 </div>
-{{ render_pagination(pagination,'front.job')}}
+{{ render_pagination(pagination,'job.index')}}
 {% endblock %}

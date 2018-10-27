@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+{{ company.user.username }}
+{% endblock %}
 {% block body %}
 <div class="container-fluid header">
 	<div class="jumbotron">
@@ -23,7 +26,7 @@
 			<div class="tab-pane fade" id="job">
 				{% for job in job %}
 
-					<div class="job-item"><a href="{{ url_for('front.job_details',job_id=job.id)}}" style="text-decoration:none;">
+					<div class="job-item"><a href="{{ url_for('job.job_details',job_id=job.id)}}" style="text-decoration:none;">
 						<h3>{{ job.jobname }}</h3>
 						<h3></h3>
 						<h4><p class="job-salary">{{ job.salary_min }} - {{ job.salary_max }}</p>经验 {{ job.exprience }}年</h4> 
