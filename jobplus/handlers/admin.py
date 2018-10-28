@@ -17,7 +17,7 @@ def users():
 	pagination=User.query.paginate(page=page,per_page=current_app.config['INDEX_PER_PAGE'],error_out=False)
 	return render_template('admin/users.html',pagination=pagination)
 
-@admin.route('/users/create',methods=['GET','POST'])
+@admin.route('/users/create_user',methods=['GET','POST'])
 @admin_required
 def create_user():
 	form=UserRegisterForm()
@@ -26,6 +26,19 @@ def create_user():
 		flash('create user success','success')
 		return redirect(url_for('admin.users'))
 	return render_template('admin/create_user.html',form=form)
+
+@admin.route('/users/create_company',methods=['GET','POST'])
+@admin_required
+def create_company():
+	form=UserRegisterForm()
+	if form.validate_on_submit():
+		u = form.create_user()
+		u.role=User.ROLE_COMPANY
+		db.session.add(u)
+		db.session.commit()
+		flash('create company success','success')
+		return redirect(url_for('admin.users'))
+	return render_template('admin/create_company.html',form=form)
 
 @admin.route('/users/<int:id>/edit',methods=['GET','POST'])
 @admin_required

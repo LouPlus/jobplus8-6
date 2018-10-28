@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,TextAreaField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,TextAreaField,SelectField
 from wtforms.validators import Length,Email,EqualTo,DataRequired
 from jobplus.models import db,User,CompanyDetail,Job
+from flask_wtf.file import FileField,FileRequired
+import os
 
 class UserRegisterForm(FlaskForm):
     username=StringField('用户名',validators=[DataRequired(),Length(3,24)])
@@ -58,7 +60,7 @@ class LoginForm(FlaskForm):
             raise ValidationError('密码错误')
 
 class CompanyProfileForm(FlaskForm):
-    name = StringField('企业名称')
+    username = StringField('企业名称')
     email = StringField('邮箱', validators=[DataRequired(), Email()])
     phone = StringField('Phone Number',validators=[DataRequired()])
     password = PasswordField('密码(不填写保持不变)')
@@ -71,7 +73,7 @@ class CompanyProfileForm(FlaskForm):
     submit = SubmitField('提交')
 
     def updated_profile(self,user):
-        user.username = self.name.data
+        user.username = self.username.data
         user.email = self.email.data
         user.phone = self.phone.data
         if self.password.data:
@@ -93,7 +95,19 @@ class UserProfileForm(FlaskForm):
     email = StringField('邮箱', validators=[DataRequired(), Email()])
     phone = StringField('手机号码',validators=[DataRequired()])
     password = PasswordField('密码(不填写保持不变)')
+    resume = FileField('upload resume',validators=[FileRequired()])
     submit = SubmitField('提交')
+
+    def upload_resume(self):
+        f = self.resume.data
+        filename = self.real_name.data+'.pdf'
+        f.save(os.path.join(
+            os.path.abspath(os.path.dirname(__file__)),
+            'static',
+            'resumes',
+            filename
+            ))
+        return filename
 
     def updated_profile(self,user):
         user.realname = self.name.data
@@ -110,6 +124,14 @@ class PublishForm(FlaskForm):
     salary_max=StringField('max salary')
     location=StringField('location')
     job_tag=StringField('job tag')
+    experience=SelectField(
+        'experience requirement',
+        choices=[
+        ('0','0'),('1','1'),('2','2'),('3','3'),
+        ('1-3','1-3'),('3-5','3-5'),('5+','5+')])
+    degree=SelectField(
+        'degree requirement',
+        choices=[('batcheler','batcheler'),('master','master'),('doctor','doctor')])
     job_description=StringField('job description')
     submit=SubmitField('Publish')
     def publish_job(self,company):
