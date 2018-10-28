@@ -61,25 +61,8 @@ def logout():
     flash('logout','success')
     return redirect(url_for('front.index'))
 
-@front.route('/job')
-def job():
-    job = Job.query.all()
-    time_now = datetime.utcnow()
 
-    page = request.args.get('page',default=1,type=int)
-    pagination = Job.query.paginate(
-        page = page,
-        per_page = current_app.config['INDEX_PER_PAGE'],
-        error_out = False
-    )
-    return render_template('./job/job.html',pagination=pagination,job=job,time=time_now)
 
-@front.route('/job/<int:job_id>')
-def job_details(job_id):
-    time_now = datetime.utcnow()
-    job = Job.query.filter_by(id = job_id).first()
-    company = CompanyDetail.query.filter_by(id = job.company_id)
-    return render_template('./job/job_details.html',job = job,company = company,time=time_now)
 
 
 

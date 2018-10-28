@@ -32,7 +32,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url_for('front.job')}}">职位</a></li>
+						<li><a href="{{ url_for('job.index')}}">职位</a></li>
 						<li><a href="{{ url_for('company.index')}}">公司</a></li>
 						{% if current_user.is_authenticated and current_user.is_company %}
 						<li><a href="{{url_for('company.admin_index',company_id=current_user.id)}}">console</a></li>
@@ -51,7 +51,7 @@
 						<li class="dropdown">
 							<a href='#' class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username}}<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Home</a></li>
+								<li><a href="{{ url_for('user.user_detail')}}">Home</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="{{url_for('front.logout')}}">Logout</a></li>
 							</ul>
