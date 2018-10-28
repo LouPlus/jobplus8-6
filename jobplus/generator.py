@@ -27,7 +27,6 @@ def iter_user():
         _password = fake.password(),
         phone=fake.phone_number(),
         realname=fake.name(),
-        resume_url=fake.url(),
         role=10
         )
 

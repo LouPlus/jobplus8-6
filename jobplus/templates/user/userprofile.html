@@ -5,6 +5,6 @@
 {% block body%}
 <div class="form">
 	<h1>完善个人信息</h1>
-	{{render_form(form,url_for('user.profile'))}}
+	{{render_form(form,url_for('user.profile'),upload_file='yes')}}
 </div>
 {%endblock%}

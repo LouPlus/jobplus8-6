@@ -56,6 +56,7 @@ class Job(Base):
     salary_min = db.Column(db.String(64))
     salary_max = db.Column(db.String(64))
     exprience = db.Column(db.String(64))
+    degree = db.Column(db.String(64))
     location = db.Column(db.String(64))
     job_tag = db.Column(db.String(64))
     job_description = db.Column(db.String(256))

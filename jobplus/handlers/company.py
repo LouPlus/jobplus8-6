@@ -15,6 +15,7 @@ def index():
         error_out = False
         )
     return render_template('company/company.html',pagination=pagination,active='company')
+
 @company.route('/<int:company_id>')
 def company_details(company_id):
     job = Job.query.filter_by(company_id = company_id)
@@ -30,7 +31,7 @@ def profile():
     #     flash('您不是企业用户', 'warning')
     #     return redirect(url_for('front.index'))
     form = CompanyProfileForm(obj=current_user.company)
-    form.name.data = current_user.realname
+    form.username.data = current_user.username
     form.email.data = current_user.email
     if form.validate_on_submit():
         form.updated_profile(current_user)
@@ -48,7 +49,7 @@ def admin_index(company_id):
         page=page,
         per_page=current_app.config['INDEX_PER_PAGE'],
         error_out=False)
-    return render_template('company/admin_index.html',pagination=pagination,company_id=company_id)
+    return render_template('company/admin_index.html',pagination=pagination,company_id=company_id,company=company)
 
 
 @company.route('/<int:company_id>/admin/publish_job',methods=['GET','POST'])
@@ -75,7 +76,7 @@ def online_job(id):
         flash('%s downline success'%job.jobname,'success')
     db.session.add(job)
     db.session.commit()
-    return redirect(url_for('company.admin_index'))
+    return redirect(url_for('company.admin_index',company_id=current_user.id))
 
 @company.route('/<int:company_id>/admin/edit_job/<int:job_id>')
 @company_required
