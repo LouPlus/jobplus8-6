@@ -17,7 +17,7 @@ class User(Base,UserMixin):
     ROLE_COMPANY = 20
     ROLE_ADMIN = 30
     id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(32),unique=True,index=True,nullable=False)
+    username = db.Column(db.String(32),index=True,nullable=False)
     email = db.Column(db.String(64),unique=True,index=True,nullable=False)
     _password = db.Column('password',db.String(256),nullable=False)
     phone=db.Column(db.String(16))
