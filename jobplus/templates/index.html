@@ -19,7 +19,7 @@
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">最新职位</a></li>
 </ul>
-
+{% if job %}
 <div class="job-list">
 {% for i in range(9) %}
 	<div class="col-sm-6 col-md-4">
@@ -41,10 +41,13 @@
 <p class="read_more">
 <a href="{{url_for('job.index')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
-
+{% else %}
+<p>nothing here</p>
+{% endif %}
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">最新公司</a></li>
 </ul>
+{% if company %}
 <div class="company-list">
 {% for i in range(12) %}
 	<div class="col-sm-6 col-md-3">
@@ -53,12 +56,8 @@
 				<a href="{{ url_for('company.company_details',company_id=company[i].id)}}">
 					<b>{{ company[i].user.username }}</b>
 					<b>{{ job_count }}</b>
-					
-
 				</a>
-
 			</div>
-		   
 		</div>
 	</div>
 {% endfor %}
@@ -66,7 +65,9 @@
 <p class="read_more">
 <a href="{{url_for('company.index')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
-
+{% else %}
+<p>nothing here too</p>
+{% endif %}
 
 </div>
 {% endblock %}
