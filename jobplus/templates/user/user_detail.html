@@ -3,8 +3,12 @@
 
 {% block body%}
 <div class="container">
-	<h1>个人信息</h1>
-	<p>{{ current_user.username }}</p>
-	
+	<h1>个人信息</h1> 
+	<p>用户名:{{ current_user.username }}</p>
+	<p>邮箱:{{ current_user.email }}</p>
+	<p>简历地址{{ current_user.resume_url }}</p>
+	<p>真实姓名:{{ current_user.realname }}</p>
+	<p><a href="{{url_for('user.user_fix_resume')}}">修改简历</a></p>	
+	<p><a href="{{url_for('user.profile')}}">修改个人信息</a></p>	
 </div>
 {%endblock%}

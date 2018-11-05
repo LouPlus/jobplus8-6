@@ -12,6 +12,7 @@
 
 <div class="job-list">
 <div class="container">
+{% if pagination.items %}
 {% for job in pagination.items %}
 	<div class="col-sm-6 col-md-4">
 		<div class="job-box">
@@ -28,6 +29,9 @@
 		</div>
 	</div>
 {% endfor %}
+{% else %}
+<span><font color="red"><br>目前还没有职位发布</font></span>
+{% endif %}
 </div>
 </div>
 {{ render_pagination(pagination,'job.index')}}
