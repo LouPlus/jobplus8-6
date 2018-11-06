@@ -8,11 +8,9 @@ front = Blueprint('front',__name__)
 
 @front.route('/')
 def index():
-
     job=Job.query.all()
     company = CompanyDetail.query.all()
     time_now=datetime.utcnow()
-    
     return render_template('index.html',job=job,company=company,time=time_now)
 
 @front.route('/userregister',methods=['POST','GET'])

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,TextAreaField,SelectField
-from wtforms.validators import Length,Email,EqualTo,DataRequired
+from wtforms.validators import Length,Email,EqualTo,DataRequired,URL
 from jobplus.models import db,User,CompanyDetail,Job
 from flask_wtf.file import FileField,FileRequired
 import os
@@ -95,7 +95,8 @@ class UserProfileForm(FlaskForm):
     email = StringField('邮箱', validators=[DataRequired(), Email()])
     phone = StringField('手机号码',validators=[DataRequired()])
     password = PasswordField('密码(不填写保持不变)')
-    resume = FileField('upload resume',validators=[FileRequired()])
+    resume = FileField('upload resume')
+    resume_url = StringField('resume',validators=[DataRequired(), URL()])
     submit = SubmitField('提交')
 
     def upload_resume(self):
@@ -113,10 +114,24 @@ class UserProfileForm(FlaskForm):
         user.realname = self.name.data
         user.email = self.email.data
         user.phone = self.phone.data
+        user.resume_url = self.resume_url.data
         if self.password.data:
             user.password = self.password.data
         db.session.add(user)
         db.session.commit()
+
+class FixUserResumeForm(FlaskForm):
+    # resume = FileField('upload resume',validators=[FileRequired()])
+    resume_url = StringField('resume',validators=[DataRequired(), URL()])
+    submit = SubmitField('提交')
+    def updated_resume(self):
+        if self.resume_url.data:
+            user.resume_url = self.resume_url.data
+        db.session.add(user)
+        db.session.commit()
+
+
+
 
 class PublishForm(FlaskForm):
     jobname=StringField('jobname',validators=[DataRequired()])

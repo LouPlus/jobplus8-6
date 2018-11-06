@@ -16,6 +16,7 @@
 
 
 <div class="container">
+{% if job %}
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">最新职位</a></li>
 </ul>
@@ -41,10 +42,14 @@
 <p class="read_more">
 <a href="{{url_for('job.index')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
-
+{% else %}
+<span><font color="red">目前还没有职位发布</font></span>
+{% endif %}
+{% if company %}
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">最新公司</a></li>
 </ul>
+
 <div class="company-list">
 {% for i in range(12) %}
 	<div class="col-sm-6 col-md-3">
@@ -53,12 +58,8 @@
 				<a href="{{ url_for('company.company_details',company_id=company[i].id)}}">
 					<b>{{ company[i].user.username }}</b>
 					<b>{{ job_count }}</b>
-					
-
 				</a>
-
 			</div>
-		   
 		</div>
 	</div>
 {% endfor %}
@@ -66,7 +67,9 @@
 <p class="read_more">
 <a href="{{url_for('company.index')}}" class="btn btn-primary btn-lg active" role="button">查看更多</a>
 </p>
-
+{% else %}
+<span><font color="red"><br>目前还没有公司注册</font></span>
+{% endif %}
 
 </div>
 {% endblock %}
